@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактирование статуса заказа</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#" style="color: white">MyShop</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+</nav>
+<div class="container mt-6">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="card">
+                <div class="card-header">
+                    <div class="d-flex justify-content-center">
+                        <h3>Редактирование статуса заказа</h3>
+                    </div>
+<form th:method="POST" th:action="@{/detailInfoOrders/edit/{id}(id=${orders.getId()})}" th:object="${orders}" enctype="multipart/form-data">
+    <p th:text="'Продукт: ' + *{product}"></p>
+    <p th:text="'Номер заказа ' + *{number}"></p>
+    <p th:text="'Количество: ' + *{count}" ></p>
+    <p th:text="'Цена: ' + *{price}"></p>
+    <p th:text="'Покупатель: ' + *{person}"></p>
+    <select type="text" th:field="*{status}" placeholder="Статус" id="status">
+        <option value="Принят">Принят</option>
+        <option value="Оформлен">Оформлен</option>
+        <option value="Ожидает">Ожидает</option>
+        <option value="Получен">Получен</option>
+    </select>
+    <div style="color: red" th:if="${#fields.hasErrors('status')}" th:errors="*{status}"></div>
+    <br>
+    <input type="submit" class="btn btn-primary btn-block" style="width: 200px; margin-top: 10px;" value="Редактировать">
+</form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer class="bg-dark text-center text-lg-start fixed-bottom">
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2); color: white">
+        MyShop
+    </div>
+</footer>
+</body>
+</html>

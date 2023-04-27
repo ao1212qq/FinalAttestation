@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Добавление товара</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#" style="color: white">MyShop</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <form method="get" th:action="@{/admin}">
+      <button type="submit" class="btn btn-primary btn-block" style="width: 200px">Вернуться</button>
+    </form>
+  </div>
+</nav>
+<div class="container mt-6">
+  <div class="row justify-content-center">
+    <div class="col-md-10">
+      <div class="card">
+        <div class="card-header">
+          <div class="d-flex justify-content-center">
+            <h3>Добавление товара</h3>
+          </div>
+<form th:method="POST" th:action="@{/admin/product/add}" th:object="${product}" enctype="multipart/form-data">
+  <div class="form-group row">
+  <label for="title" class="col-sm-2 col-form-label">Введите наименование товара: </label>
+    <div class="col-sm-10">
+  <input class="form-control" type="text" th:field="*{title}" placeholder="Наименование" id="title">
+  <div style="color: red" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
+    </div>
+  </div>
+  <br>
+  <br>
+  <div class="form-group row">
+  <label for="description" class="col-sm-2 col-form-label">Введите описание товара: </label>
+    <div class="col-sm-10">
+  <textarea class="form-control" th:field="*{description}" placeholder="Описание" id="description"></textarea>
+  <div style="color: red" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
+  </div>
+  </div>
+    <br>
+  <br>
+    <div class="form-group row">
+  <label for="price" class="col-sm-2 col-form-label">Введите цену товара: </label>
+      <div class="col-sm-10">
+      <input class="form-control" type="number" th:field="*{price}" min="1" step="0.00" placeholder="Цена" id="price">
+  <div style="color: red" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></div>
+    </div>
+      </div>
+      <br>
+  <br>
+      <div class="form-group row">
+  <label for="warehouse" class="col-sm-2 col-form-label">Введите cклад, на котором расположен товар: </label>
+        <div class="col-sm-10">
+        <input class="form-control" type="text" th:field="*{warehouse}" placeholder="Cклад" id="warehouse">
+  <div style="color: red" th:if="${#fields.hasErrors('warehouse')}" th:errors="*{warehouse}"></div>
+      </div>
+    </div>
+  <br>
+  <br>
+        <div class="form-group row">
+  <label for="category" class="col-sm-2 col-form-label">Выберите категорию товара: </label>
+          <div class="col-sm-10">
+  <select class="form-control" name="category" th:field="*{category}" id="category">
+    <div th:each="element : ${category}">
+      <option th:text="${element.getName()}" th:value="${element.getId()}">
+    </div>
+  </select>
+  <div style="color: red" th:if="${#fields.hasErrors('category')}" th:errors="*{category}"></div>
+        </div>
+  </div>
+  <br>
+  <br>
+          <div class="form-group row">
+  <label  for="seller" class="col-sm-2 col-form-label">Введите данные о продавце: </label>
+            <div class="col-sm-10">
+            <textarea class="form-control" th:field="*{seller}" placeholder="Продавец" id="seller"></textarea>
+  <div style="color: red" th:if="${#fields.hasErrors('seller')}" th:errors="*{seller}"></div>
+  </div>
+</div>
+  <br>
+  <br>
+  <p style="color: red">Вы можете добавить до 5 фотографий. Первая фотография не может быть пустой т.к они будет являтся главной при выводе карточки товара</p>
+  <input type="file" name="file_one">
+  <input type="file" name="file_two">
+  <input type="file" name="file_three">
+  <input type="file" name="file_four">
+  <input type="file" name="file_five">
+  <br>
+  <br>
+  <input type="submit" value="Добавить">
+</form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<footer class="bg-dark text-center text-lg-start sticky-bottom">
+  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2); color: white">
+    MyShop
+  </div>
+</footer>
+</body>
+</html>

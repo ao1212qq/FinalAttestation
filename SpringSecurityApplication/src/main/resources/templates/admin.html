@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Личный кабинет администратора</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#" style="color: white">MyShop</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <form method="post" th:action="@{/logout}">
+            <button type="submit" class="btn btn-primary btn-block" style="width: 200px">Выйти</button>
+        </form>
+    </div>
+</nav>
+<div class="container mt-6">
+  <div class="row justify-content-center">
+    <div class="col-md-10">
+      <div class="card">
+        <div class="card-header">
+          <div class="d-flex justify-content-center">
+            <h1>Личный кабинет администратора</h1>
+          </div>
+            <hr>
+              <a href="admin/product/add">Добавить товар</a>
+<hr>
+<div th:each="product : ${products}">
+  <p th:text="'Наименование: ' + ${product.getTitle()}"></p>
+  <p th:text="'Описание: ' + ${product.getDescription()}"></p>
+  <p th:text="'Цена: ' + ${product.getPrice()}"></p>
+  <p th:text="'Cклад: ' + ${product.getWarehouse()}"></p>
+  <p th:text="'Продавец: ' + ${product.getSeller()}"></p>
+  <p th:text="'Категория: ' + ${product.getCategory().getName()}"></p>
+  <a th:href="@{/admin/product/edit/{id}(id=${product.getId()})}">Редактирование товара</a>
+  <a th:href="@{/admin/product/delete/{id}(id=${product.getId()})}">Удаление товара</a>
+  <hr>
+</div>
+<hr>
+          <div class="row">
+            <div class="col">
+<h3>Менеджер заказов: </h3>
+<form method="get" th:action="@{/detailInfoOrders}">
+  <input type="submit" value="Заказы">
+</form>
+            </div>
+            <div class="col">
+<h3>Менеджер пользователей: </h3>
+<form method="get" th:action="@{/detailInfoPerson}">
+  <input type="submit" value="Пользователи">
+</form>
+            </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<footer class="bg-dark text-center text-lg-start sticky-bottom">
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2); color: white">
+        MyShop
+    </div>
+</footer>
+</body>
+</html>

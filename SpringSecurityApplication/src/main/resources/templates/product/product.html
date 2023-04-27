@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Cписок товаров</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#" style="color: white">MyShop</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <form method="post" th:action="@{/logout}">
+            <button type="submit" class="btn btn-primary btn-block" style="width: 200px">Выйти</button>
+        </form>
+    </div>
+</nav>
+<div class="container mt-6">
+  <div class="row justify-content-center">
+    <div class="col-md-10">
+      <div class="card">
+        <div class="card-header">
+          <div class="d-flex justify-content-center">
+            <h1>Главная страница магазина</h1>
+          </div>
+          <hr>
+          <div class="card-body">
+            <div class="d-flex justify-content-center">
+<h3>Cортировка, поиск, фильтрация</h3>
+            </div>
+            <hr>
+<form th:method="POST" th:action="@{/product/search}">
+  <fieldset>
+    <legend>Выберите параметры для сортировки, поиска, фильтрации:</legend>
+    <hr>
+    <label for="search">Поиск по наименованию: </label>
+    <input type="text" id="search" name="search" th:value="*{value_search}">
+    <hr>
+    <p>Цена, P</p>
+    <label for="ot">От</label>
+    <input type="text" name="ot" id="ot" th:value="*{value_price_ot}">
+    <label for="do">До</label>
+    <input type="text" name="do" id="do" th:value="*{value_price_do}">
+    <hr>
+    <div>
+      <input type="radio" id="ascending_price" name="price" value="sorted_by_ascending_price">
+      <label for="ascending_price">Отсортировать по возрастанию цены</label>
+      <input type="radio" id="descending_price" name="price"
+             value="sorted_by_descending_price">
+      <label for="descending_price">Отсортировать по убыванию цены</label>
+      <hr>
+      <p>Категория товаров: </p>
+      <input type="radio" id="furniture" name="contract" value="furniture">
+      <label for="furniture">Мебель</label>
+      <input type="radio" id="appliances" name="contract" value="appliances">
+      <label for="appliances">Бытовая техника</label>
+      <input type="radio" id="clothes" name="contract" value="clothes">
+      <label for="clothes">Одежда</label>
+      <br>
+      <br>
+      <input type="submit" value="Найти">
+    </div>
+  </fieldset>
+</form>
+<hr>
+            <div class="d-flex justify-content-center">
+<h3>Результат поиска, cортировки, фильтрации</h3>
+            </div>
+<div th:each="product : ${search_product}">
+  <div class="d-flex justify-content-center">
+    <div class="card" style="background-color: #a9d7ff;width: 600px">
+      <div class="d-flex justify-content-center" style="margin-top: 15px;">
+  <img th:src="'/img/' + ${product.imageList[0].getFileName()}" width="300px">
+      </div>
+      <div class="card-body">
+  <br>
+        <div class="border border-primary p-3" style="background-color: #d5dad9;">
+          <div class="d-flex justify-content-center">
+            <a class="card-text" th:href="@{/product/info/{id}(id=${product.getId()})}" th:text="${product.getTitle()}"></a>
+          </div>
+          <div class="d-flex justify-content-center">
+  <p  class="card-text" th:text="'Цена: ' + ${product.getPrice()}"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr>
+</div>
+<hr>
+            <div class="d-flex justify-content-center">
+<h3>Все товары: </h3>
+              </div>
+<div th:each="product : ${products}">
+  <div class="d-flex justify-content-center">
+  <div class="card" style="background-color: #a9d7ff;width: 600px">
+    <div class="d-flex justify-content-center" style="margin-top: 15px;">
+  <img th:src="'/img/' + ${product.imageList[0].getFileName()}" width="300px">
+    </div>
+    <div class="card-body">
+  <br>
+      <div class="border border-primary p-3" style="background-color: #d5dad9;">
+      <div class="d-flex justify-content-center">
+        <a  class="card-text" th:href="@{/product/info/{id}(id=${product.getId()})}" th:text="${product.getTitle()}"></a>
+      </div>
+      <div class="d-flex justify-content-center">
+  <p  class="card-text" th:text="'Цена: ' + ${product.getPrice()}"></p>
+      </div>
+      </div>
+    </div>
+    </div>
+  </div>
+  <hr>
+        </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    <footer class="bg-dark text-center text-lg-start fixed-bottom">
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2); color: white">
+            MyShop
+        </div>
+    </footer>
+</body>
+</html>
